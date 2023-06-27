@@ -34,6 +34,7 @@ snail_rect = snail_surface.get_rect(midbottom = (snail_x_pos, ground_height))
 player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
 player_rect = player_surface.get_rect(bottomright = (80,ground_height))
 player_gravity = 0
+player_walking_mod = 1
 
 # Intro screen
 player_stand = pygame.image.load('graphics/Player/player_stand.png').convert_alpha()
@@ -52,10 +53,33 @@ while 1:
             if  event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and player_rect.bottom >= 300:
                     player_gravity = -20
+                    player_surface = pygame.image.load('graphics/Player/player_walk_2.png').convert_alpha()
+                    if player_rect.bottom >= 300: player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+                
+                # move right
+                if event.key == pygame.K_RIGHT and player_rect.right <= 800:
+                    player_rect.x += 8
+                    if player_walking_mod == 1:
+                        player_surface = pygame.image.load('graphics/Player/player_walk_2.png').convert_alpha()
+                        player_walking_mod = 2
+                    elif player_walking_mod == 2:
+                        player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+                        player_walking_mod = 1
+
+                # move left
+                if event.key == pygame.K_LEFT and player_rect.left >= 0:
+                    player_rect.x -= 8
+                    if player_walking_mod == 1:
+                        player_surface = pygame.image.load('graphics/Player/player_walk_2.png').convert_alpha()
+                        player_walking_mod = 2
+                    elif player_walking_mod == 2:
+                        player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+                        player_walking_mod = 1
         else:
             if  event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 game_active = True
                 snail_rect.right = snail_x_pos
+                player_rect.left = 0
                 start_time = pygame.time.get_ticks()
 
             if  event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -75,7 +99,8 @@ while 1:
         # Player
         player_gravity += 1
         player_rect.y += player_gravity
-        if player_rect.bottom >= 300: player_rect.bottom = 300
+        if player_rect.bottom >= 300:
+            player_rect.bottom = 300            
         screen.blit(player_surface, player_rect)
 
         # collisions
