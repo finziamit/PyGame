@@ -132,6 +132,10 @@ while 1:
         screen.blit(instructions_text_surface, instructions_text_rect)
         final_score_surface = test_font.render(f"Your score: {top_score}", False, game_deactivated_text_color)
         final_score_rect = instructions_text_surface.get_rect(center = (screen_width//2,screen_height - 50))
+        move_right = False
+        move_left = False
+        player_walking_mod = 1
+        player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
         if top_score: screen.blit(final_score_surface, final_score_rect)
 
     pygame.display.update()
