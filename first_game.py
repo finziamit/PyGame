@@ -18,6 +18,7 @@ my_game_text_color = (64,64,64)
 my_game_text_bg_color = '#c0e8ec'
 
 game_deactivated_screen_color = (94,129,162)
+game_deactivated_text_color = (0, 164, 100)
 
 pygame.init()
 screen = pygame.display.set_mode((screen_width,screen_height)) # set screen size
@@ -40,6 +41,9 @@ player_walking_mod = 1
 player_stand = pygame.image.load('graphics/Player/player_stand.png').convert_alpha()
 player_stand = pygame.transform.scale2x(player_stand)
 player_stand_rect = player_stand.get_rect(center = (screen_width//2, screen_height//2))
+instructions_text_surface = test_font.render("To start a game press space button", False, game_deactivated_text_color)
+instructions_text_rect = instructions_text_surface.get_rect(center = (screen_width//2,50))
+
 
 game_active = False
 
@@ -108,6 +112,7 @@ while 1:
     else:
         screen.fill(game_deactivated_screen_color)
         screen.blit(player_stand, player_stand_rect)
+        screen.blit(instructions_text_surface, instructions_text_rect)
 
     pygame.display.update()
     clock.tick(60) # set how much time per sec the loop will run, in this case 60.
