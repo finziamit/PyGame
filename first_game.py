@@ -35,6 +35,12 @@ snail_rect = snail_surface.get_rect(midbottom = (snail_x_pos, ground_height))
 
 player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
 player_rect = player_surface.get_rect(bottomright = (80,ground_height))
+
+# Grenade
+grenade_surface = pygame.image.load('graphics/Grenade/grenade.png').convert_alpha()
+grenade_surface = pygame.transform.scale_by(grenade_surface, 0.1)
+grenade_rect = grenade_surface.get_rect(midleft=(-100, -100))
+
 player_gravity = 0
 player_walking_mod = 1
 top_score = 0
@@ -48,6 +54,10 @@ instructions_text_rect = instructions_text_surface.get_rect(center = (screen_wid
 game_active = False
 move_right = False
 move_left = False
+
+# Grenade factors
+grenade_throw = False
+grenade_bounce_dir = 1
 
 while 1:
     for event in pygame.event.get():
@@ -74,7 +84,11 @@ while 1:
             # stop moving left
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT: move_left = False
-                    
+            
+            # grenade throw
+            if event.type == pygame.KEYDOWN and not grenade_throw:
+                if event.key == pygame.K_f: grenade_throw = True            
+
         else:
             if  event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 game_active = True
@@ -91,6 +105,7 @@ while 1:
     if game_active:
         screen.blit(sky_surface,(0,0))
         screen.blit(ground_surface, (0,ground_height))
+        screen.blit(grenade_surface, grenade_rect)
 
         top_score = display_score()
 
@@ -126,6 +141,30 @@ while 1:
             elif player_walking_mod == 2:
                 player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
                 player_walking_mod = 1
+        
+        # Functionality of grenade
+        if grenade_throw:
+            if grenade_rect.x >=800:
+                grenade_throw = False
+                grenade_rect.x = -100
+                grenade_rect.y = - 100
+            elif grenade_rect.x <=0:
+                grenade_rect = grenade_surface.get_rect(center=player_rect.midright)
+            grenade_rect.x += step_size
+            if grenade_bounce_dir == 1:
+                if grenade_rect.bottom >= ground_height-40: grenade_rect.y -= 2
+                else: grenade_bounce_dir = 0
+            elif grenade_bounce_dir == 0:
+                if grenade_rect.bottom <= ground_height: grenade_rect.y += 2
+                else: grenade_bounce_dir = 1
+
+            if snail_rect.colliderect(grenade_rect):
+                snail_rect.x = snail_rect.x + 800
+                grenade_throw = False
+                grenade_rect.x = -100
+                grenade_rect.y = - 100
+
+            
     else:
         screen.fill(game_deactivated_screen_color)
         screen.blit(player_stand, player_stand_rect)
