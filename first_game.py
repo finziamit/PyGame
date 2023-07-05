@@ -141,7 +141,7 @@ while 1:
             elif player_walking_mod == 2:
                 player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
                 player_walking_mod = 1
-        
+
         # Functionality of grenade
         if grenade_throw:
             if grenade_rect.x >=800:
