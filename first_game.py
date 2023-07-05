@@ -37,15 +37,17 @@ snail_rect = snail_surface.get_rect(midbottom = (snail_x_pos, ground_height))
 player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
 player_rect = player_surface.get_rect(bottomright = (80,ground_height))
 
+# Grenade logo
+grenade_logo_surface = pygame.image.load('graphics/Grenade/grenade.png').convert_alpha()
+grenade_logo_surface = pygame.transform.scale_by(grenade_logo_surface, 0.08)
+grenade_empty_logo_surface = grenade_logo_surface.copy()
+grenade_empty_logo_surface.set_colorkey(empty)
+grenade_logo_rect = grenade_logo_surface.get_rect(topleft=(20,20))
+
 # Grenade
 grenade_surface = pygame.image.load('graphics/Grenade/grenade.png').convert_alpha()
 grenade_surface = pygame.transform.scale_by(grenade_surface, 0.1)
 grenade_rect = grenade_surface.get_rect(midleft=(-100, -100))
-
-# Grenade logo
-grenade_logo_surface = grenade_surface = pygame.image.load('graphics/Grenade/grenade.png').convert_alpha()
-grenade_logo_surface = pygame.transform.scale_by(grenade_surface, 0.06)
-grenade_logo_rect = grenade_logo_surface.get_rect(topleft=(5,5))
 
 player_gravity = 0
 player_walking_mod = 1
@@ -121,6 +123,10 @@ while 1:
         if top_score != 0 and top_score % 10 == 0 and not has_grenade: has_grenade = True
 
         # if player has grenade
+        if has_grenade:
+            screen.blit(grenade_logo_surface, grenade_logo_rect)
+        else:
+            screen.blit(grenade_empty_logo_surface, grenade_rect)        
 
         snail_rect.x -= step_size
         if snail_rect.right <= 0: snail_rect.left = screen_width
