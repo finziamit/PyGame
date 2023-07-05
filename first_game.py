@@ -15,6 +15,7 @@ snail_x_pos = 800
 step_size = 4
 start_time = 0
 
+empty = pygame.Color(0,0,0,0)
 my_game_text_color = (64,64,64)
 my_game_text_bg_color = '#c0e8ec'
 
@@ -41,6 +42,11 @@ grenade_surface = pygame.image.load('graphics/Grenade/grenade.png').convert_alph
 grenade_surface = pygame.transform.scale_by(grenade_surface, 0.1)
 grenade_rect = grenade_surface.get_rect(midleft=(-100, -100))
 
+# Grenade logo
+grenade_logo_surface = grenade_surface = pygame.image.load('graphics/Grenade/grenade.png').convert_alpha()
+grenade_logo_surface = pygame.transform.scale_by(grenade_surface, 0.06)
+grenade_logo_rect = grenade_logo_surface.get_rect(topleft=(5,5))
+
 player_gravity = 0
 player_walking_mod = 1
 top_score = 0
@@ -58,6 +64,7 @@ move_left = False
 # Grenade factors
 grenade_throw = False
 grenade_bounce_dir = 1
+has_grenade = False
 
 while 1:
     for event in pygame.event.get():
@@ -86,14 +93,17 @@ while 1:
                 if event.key == pygame.K_LEFT: move_left = False
             
             # grenade throw
-            if event.type == pygame.KEYDOWN and not grenade_throw:
-                if event.key == pygame.K_f: grenade_throw = True            
+            if event.type == pygame.KEYDOWN and has_grenade and not grenade_throw:
+                if event.key == pygame.K_f:
+                    grenade_throw = True
+                    has_grenade = False
 
         else:
             if  event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 game_active = True
                 snail_rect.right = snail_x_pos
                 player_rect.left = 0
+                has_grenade = False
                 start_time = pygame.time.get_ticks()
                 
             if  event.type == pygame.KEYUP and event.key == pygame.K_SPACE: top_score = 0
@@ -108,6 +118,9 @@ while 1:
         screen.blit(grenade_surface, grenade_rect)
 
         top_score = display_score()
+        if top_score != 0 and top_score % 10 == 0 and not has_grenade: has_grenade = True
+
+        # if player has grenade
 
         snail_rect.x -= step_size
         if snail_rect.right <= 0: snail_rect.left = screen_width
