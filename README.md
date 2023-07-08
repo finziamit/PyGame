@@ -14,7 +14,3 @@ Notice that the game is not the exact same and some ideas of my own were added.
 
 ## Second game
 The second game is a juggle game where you can control each hand and can't let a ball fall.
-=======
-Notice that the game is not the exact same thing as I decided to make my own modifications to it.
-The second game is 100% original besides some of the graphics taken from the web
->>>>>>> 9e535ffe0162bd6c744cda48b3cf7fd4ec97c34a
