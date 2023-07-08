@@ -17,19 +17,36 @@ def move_right_hand():
     pass
 
 
+def stop_right_hand():
+    '''Stop movement of right hand'''
+    pass
+
+
 def move_left_hand():
     '''Set left hand movement'''
     pass
 
 
-def set_components():
-    ''' Load components and set starting position '''
+def stop_left_hand():
+    '''Stop movement of left hand'''
     pass
 
 
 def game_play():
-    ''' Update screen by how game is going'''
-    set_components()
+    '''Update screen by how game is going'''
+    screen = display.set_mode((800,400))
+    display.set_caption("Juggler")
+    clock = time.Clock()
+    background_surface = image.load('graphics/theater_bg.jpg').convert()
+
+    # TODO: draw hands images and delete their background
+    right_hand_surface = image.load('graphics/right_hand.png').convert_alpha()
+    right_hand_rect = right_hand_surface.get_rect(midleft=(300, 500))
+    left_hand_surface = image.load('graphics/left_hand.png').convert_alpha()
+    left_hand_rect = left_hand_surface.get_rect(midleft=(300, 300))
+    # blue_ball = 
+    # red_ball = 
+    # yellow_ball = 
     pass
 
 
