@@ -41,9 +41,12 @@ def game_play():
     right_hand_rect = right_hand_surface.get_rect(midleft=(300, 500))
     left_hand_surface = image.load('graphics/left_hand.png').convert_alpha()
     left_hand_rect = left_hand_surface.get_rect(midleft=(300, 300))
-    # blue_ball = 
-    # red_ball = 
-    # yellow_ball = 
+    blue_ball_surface = image.load('graphics/blue_ball.png').convert_alpha()
+    blue_ball_rect = blue_ball_surface.get_rect((-50, -50))
+    red_ball_surface = image.load('graphics/red_ball.png').convert_alpha()
+    red_ball_surface = red_ball_surface.get_rect((-50, -50))
+    yellow_ball_surface = image.load('graphics/yellow_ball.png').convert_alpha()
+    yellow_ball_rect = yellow_ball_surface.get_rect((-50, -50))
     pass
 
 
