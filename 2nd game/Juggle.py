@@ -1,10 +1,16 @@
 from pygame import *
 import sys
+from random import randint
 
-
-def move_ball():
+def move_ball(ball_rect):
     '''Set ball movement'''
-    pass
+    direction = randint(0,2) # 0 -> right, 1 -> left
+    ball_speed = randint(1, 6) # power of the ball
+    ball_gravity = -10 * ball_speed
+    for i in range(10 * ball_speed):
+        ball_gravity += 1
+        ball_rect.y += ball_gravity
+        ball_rect.x += direction
 
 
 def update_score():
@@ -12,24 +18,20 @@ def update_score():
     pass
 
 
-def move_right_hand():
+def move_right_hand(right_hand_rect, direction):
     '''Set right hand movement'''
-    pass
+    if direction == 'right' and right_hand_rect.x <= 800:
+        right_hand_rect.x += 1
+    if direction == 'left' and right_hand_rect.x >= 0:
+        right_hand_rect.x -= 1
 
 
-def stop_right_hand():
-    '''Stop movement of right hand'''
-    pass
-
-
-def move_left_hand():
+def move_left_hand(left_hand_rect, direction):
     '''Set left hand movement'''
-    pass
-
-
-def stop_left_hand():
-    '''Stop movement of left hand'''
-    pass
+    if direction == 'right' and left_hand_rect.x <= 800:
+        left_hand_rect.x += 1
+    if direction == 'left' and left_hand_rect.x >= 0:
+        left_hand_rect.x -= 1
 
 
 def game_play():
