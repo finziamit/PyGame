@@ -13,11 +13,6 @@ def move_ball(ball_rect):
         ball_rect.x += direction
 
 
-def update_score():
-    ''' Update score for each ball touch'''
-    pass
-
-
 def move_right_hand(right_hand_rect, direction):
     '''Set right hand movement'''
     if direction == 'right' and right_hand_rect.x <= 800:
