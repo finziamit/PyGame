@@ -34,18 +34,18 @@ def game_play():
     screen = display.set_mode((800,400))
     display.set_caption("Juggler")
     clock = time.Clock()
-    background_surface = image.load('graphics/theater_bg.jpg').convert()
+    background_surface = image.load('graphics/background/theater_bg.jpg').convert()
 
     # TODO: draw hands images and delete their background
-    right_hand_surface = image.load('graphics/right_hand.png').convert_alpha()
+    right_hand_surface = image.load('graphics/hands/right_hand.png').convert_alpha()
     right_hand_rect = right_hand_surface.get_rect(midleft=(300, 500))
-    left_hand_surface = image.load('graphics/left_hand.png').convert_alpha()
+    left_hand_surface = image.load('graphics/hands/left_hand.png').convert_alpha()
     left_hand_rect = left_hand_surface.get_rect(midleft=(300, 300))
-    blue_ball_surface = image.load('graphics/blue_ball.png').convert_alpha()
+    blue_ball_surface = image.load('graphics/balls/blue_ball.png').convert_alpha()
     blue_ball_rect = blue_ball_surface.get_rect((-50, -50))
-    red_ball_surface = image.load('graphics/red_ball.png').convert_alpha()
-    red_ball_surface = red_ball_surface.get_rect((-50, -50))
-    yellow_ball_surface = image.load('graphics/yellow_ball.png').convert_alpha()
+    red_ball_surface = image.load('graphics/balls/red_ball.png').convert_alpha()
+    red_ball_rect = red_ball_surface.get_rect((-50, -50))
+    yellow_ball_surface = image.load('graphics/balls/yellow_ball.png').convert_alpha()
     yellow_ball_rect = yellow_ball_surface.get_rect((-50, -50))
     pass
 
