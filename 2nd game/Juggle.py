@@ -15,7 +15,8 @@ class JuggleGame:
         self.__yellow_ball_surface = image.load('graphics/balls/yellow_ball.png').convert_alpha()
         self.__yellow_ball_rect = self.__yellow_ball_surface.get_rect((-50, -50))
 
-    def move_blue_ball(self):
+
+    def __move_blue_ball(self):
         '''Set blue ball movement'''
         direction = randint(0,2) # 0 -> right, 1 -> left
         ball_speed = randint(1, 6) # power of the ball
@@ -26,7 +27,7 @@ class JuggleGame:
             self.__blue_ball_rect.x += direction
     
 
-    def move_red_ball(self):
+    def __move_red_ball(self):
         '''Set red ball movement'''
         direction = randint(0,2) # 0 -> right, 1 -> left
         ball_speed = randint(1, 6) # power of the ball
@@ -37,7 +38,7 @@ class JuggleGame:
             self.__red_ball_rect.x += direction
     
 
-    def move_yellow_ball(self):
+    def __move_yellow_ball(self):
         '''Set yellow ball movement'''
         direction = randint(0,2) # 0 -> right, 1 -> left
         ball_speed = randint(1, 6) # power of the ball
@@ -48,7 +49,7 @@ class JuggleGame:
             self.__yellow_ball_rect.x += direction
 
 
-    def move_right_hand(self, direction):
+    def __move_right_hand(self, direction):
         '''Set right hand movement'''
         if direction == 'right' and self.__right_hand_rect.x <= 800:
             self.__right_hand_rect.x += 1
@@ -56,7 +57,7 @@ class JuggleGame:
             self.__right_hand_rect.x -= 1
 
 
-    def move_left_hand(self, direction):
+    def __move_left_hand(self, direction):
         '''Set left hand movement'''
         if direction == 'right' and self.__left_hand_rect.x <= 800:
             self.__left_hand_rect.x += 1
@@ -64,12 +65,25 @@ class JuggleGame:
             self.__left_hand_rect.x -= 1
 
 
-    def game_play():
+    def game_play(self):
         '''Update screen by how game is going'''
         screen = display.set_mode((800,400))
         display.set_caption("Juggler")
         clock = time.Clock()
         background_surface = image.load('graphics/background/theater_bg.jpg').convert()
+
+        # Play
+        while 1:
+            for event in event.get():
+                if event.type == QUIT:
+                    quit()
+                    exit()
+            
+                # move right hand right
+                if event.key == K_RIGHT: self.__move_right_hand('right')
+
+                # move right hand left
+                if event.key == K_LEFT: self.__move_right_hand('left')
         pass
 
 
