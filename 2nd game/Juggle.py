@@ -79,11 +79,17 @@ class JuggleGame:
                     quit()
                     exit()
             
-                # move right hand right
+                # move right hand right using the right arrow key
                 if event.key == K_RIGHT: self.__move_right_hand('right')
 
-                # move right hand left
+                # move right hand left using the left arrow key
                 if event.key == K_LEFT: self.__move_right_hand('left')
+
+                # move left hand right using the 'D' key
+                if event.key == K_d: self.__move_left_hand('right')
+
+                # move left hand left using the 'A' key
+                if event.key == K_a: self.__move_left_hand('left')
         pass
 
 
