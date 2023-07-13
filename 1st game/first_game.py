@@ -1,5 +1,6 @@
 import pygame
 from sys import exit
+import os
 
 def display_score():
     current_time = (pygame.time.get_ticks() - start_time) // 1000
@@ -28,24 +29,24 @@ pygame.display.set_caption("first game") # give a title to the screen
 clock = pygame.time.Clock() # set a clock
 test_font = pygame.font.Font(None, 50)
 
-sky_surface = pygame.image.load('graphics/Sky.png').convert()
-ground_surface = pygame.image.load('graphics/ground.png').convert()
+sky_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Sky.png').convert()
+ground_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/ground.png').convert()
 
-snail_surface = pygame.image.load('graphics/Snail/snail1.png').convert_alpha()
+snail_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Snail/snail1.png').convert_alpha()
 snail_rect = snail_surface.get_rect(midbottom = (snail_x_pos, ground_height))
 
-player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+player_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Player/player_walk_1.png').convert_alpha()
 player_rect = player_surface.get_rect(bottomright = (80,ground_height))
 
 # Grenade logo
-grenade_logo_surface = pygame.image.load('graphics/Grenade/grenade.png').convert_alpha()
+grenade_logo_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Grenade/grenade.png').convert_alpha()
 grenade_logo_surface = pygame.transform.scale_by(grenade_logo_surface, 0.08)
 grenade_empty_logo_surface = grenade_logo_surface.copy()
 grenade_empty_logo_surface.set_colorkey(empty)
 grenade_logo_rect = grenade_logo_surface.get_rect(topleft=(20,20))
 
 # Grenade
-grenade_surface = pygame.image.load('graphics/Grenade/grenade.png').convert_alpha()
+grenade_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Grenade/grenade.png').convert_alpha()
 grenade_surface = pygame.transform.scale_by(grenade_surface, 0.1)
 grenade_rect = grenade_surface.get_rect(midleft=(-100, -100))
 
@@ -53,7 +54,7 @@ player_gravity = 0
 player_walking_mod = 1
 top_score = 0
 # Intro screen
-player_stand = pygame.image.load('graphics/Player/player_stand.png').convert_alpha()
+player_stand = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Player/player_stand.png').convert_alpha()
 player_stand = pygame.transform.scale2x(player_stand)
 player_stand_rect = player_stand.get_rect(center = (screen_width//2, screen_height//2))
 instructions_text_surface = test_font.render("To start a game press space button", False, game_deactivated_text_color)
@@ -78,8 +79,8 @@ while 1:
             if  event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and player_rect.bottom >= 300:
                     player_gravity = -20
-                    player_surface = pygame.image.load('graphics/Player/player_walk_2.png').convert_alpha()
-                    if player_rect.bottom >= 300: player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+                    player_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Player/player_walk_2.png').convert_alpha()
+                    if player_rect.bottom >= 300: player_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Player/player_walk_1.png').convert_alpha()
                 
             # move right
                 if event.key == pygame.K_RIGHT: move_right = True
@@ -146,19 +147,19 @@ while 1:
         if move_right:
             if player_rect.right <= 800: player_rect.x += step_size
             if player_walking_mod == 1:
-                player_surface = pygame.image.load('graphics/Player/player_walk_2.png').convert_alpha()
+                player_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Player/player_walk_2.png').convert_alpha()
                 player_walking_mod = 2
             elif player_walking_mod == 2:
-                player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+                player_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Player/player_walk_1.png').convert_alpha()
                 player_walking_mod = 1
         
         if move_left:
             if player_rect.left >= 0: player_rect.x -= step_size
             if player_walking_mod == 1:
-                player_surface = pygame.image.load('graphics/Player/player_walk_2.png').convert_alpha()
+                player_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Player/player_walk_2.png').convert_alpha()
                 player_walking_mod = 2
             elif player_walking_mod == 2:
-                player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+                player_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Player/player_walk_1.png').convert_alpha()
                 player_walking_mod = 1
 
         # Functionality of grenade
@@ -193,7 +194,7 @@ while 1:
         move_right = False
         move_left = False
         player_walking_mod = 1
-        player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+        player_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Player/player_walk_1.png').convert_alpha()
         if top_score: screen.blit(final_score_surface, final_score_rect)
 
     pygame.display.update()
