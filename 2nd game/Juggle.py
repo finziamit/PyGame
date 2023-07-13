@@ -5,6 +5,9 @@ from random import randint
 class JuggleGame:
     def __init__(self):
         self.__screen = display.set_mode((800,600))
+        display.set_caption("Juggler")
+        self.__clock = time.Clock()
+        self.__background_surface = image.load('graphics/background/theater_bg.jpg').convert()
         self.__right_hand_surface = image.load('graphics/hands/right_hand.png').convert_alpha()
         self.__right_hand_rect = self.__right_hand_surface.get_rect(midleft=(300, 500))
         self.__left_hand_surface = image.load('graphics/hands/left_hand.png').convert_alpha()
@@ -67,34 +70,32 @@ class JuggleGame:
         
 
 
-def play():
-    game = JuggleGame()
-    display.set_caption("Juggler")
-    clock = time.Clock()
-    background_surface = image.load('graphics/background/theater_bg.jpg').convert()
+    def game_play(self):
+        while 1:
+            for event in event.get():
+                if event.type == QUIT:
+                    quit()
+                    sys.exit()
+            
+                # move right hand right using the right arrow key
+                if event.key == K_RIGHT: self.__move_right_hand('right')
 
-    game.__screen.blit(background_surface(0, 0))
-    while 1:
-        for event in event.get():
-            if event.type == QUIT:
-                quit()
-                exit()
-        
-            # move right hand right using the right arrow key
-            if event.key == K_RIGHT: game.__move_right_hand('right')
+                # move right hand left using the left arrow key
+                if event.key == K_LEFT: self.__move_right_hand('left')
 
-            # move right hand left using the left arrow key
-            if event.key == K_LEFT: game.__move_right_hand('left')
+                # move left hand right using the 'D' key
+                if event.key == K_d: self.__move_left_hand('right')
 
-            # move left hand right using the 'D' key
-            if event.key == K_d: game.__move_left_hand('right')
+                # move left hand left using the 'A' key
+                if event.key == K_a: self.__move_left_hand('left')
 
-            # move left hand left using the 'A' key
-            if event.key == K_a: game.__move_left_hand('left')
+
+            self.__screen.blit(self.__background_surface,(0, 0))
 
 def main():
     init()
-    play()
+    game = JuggleGame()
+    game.game_play()
     
 
 if __name__ == '__main__':
