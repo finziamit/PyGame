@@ -16,7 +16,6 @@ snail_x_pos = 800
 step_size = 4
 start_time = 0
 
-empty = pygame.Color(0,0,0,0)
 my_game_text_color = (64,64,64)
 my_game_text_bg_color = '#c0e8ec'
 
@@ -41,8 +40,6 @@ player_rect = player_surface.get_rect(bottomright = (80,ground_height))
 # Grenade logo
 grenade_logo_surface = pygame.image.load(str(os.getcwd())+'/1st game/graphics/Grenade/grenade.png').convert_alpha()
 grenade_logo_surface = pygame.transform.scale_by(grenade_logo_surface, 0.08)
-grenade_empty_logo_surface = grenade_logo_surface.copy()
-grenade_empty_logo_surface.set_colorkey(empty)
 grenade_logo_rect = grenade_logo_surface.get_rect(topleft=(20,20))
 
 # Grenade
@@ -66,7 +63,6 @@ move_left = False
 
 # Grenade factors
 grenade_throw = False
-grenade_bounce_dir = 1
 has_grenade = False
 
 while 1:
@@ -98,6 +94,7 @@ while 1:
             # grenade throw
             if event.type == pygame.KEYDOWN and has_grenade and not grenade_throw:
                 if event.key == pygame.K_f:
+                    grenade_bounce_dir = 1
                     grenade_throw = True
                     has_grenade = False
 
@@ -123,11 +120,11 @@ while 1:
         top_score = display_score()
         if top_score != 0 and top_score % 10 == 0 and not has_grenade: has_grenade = True
 
-        # if player has grenade
+        # Show if player has a grenade
         if has_grenade:
             screen.blit(grenade_logo_surface, grenade_logo_rect)
         else:
-            screen.blit(grenade_empty_logo_surface, grenade_rect)        
+            screen.blit(grenade_logo_surface, (-50, -50))
 
         snail_rect.x -= step_size
         if snail_rect.right <= 0: snail_rect.left = screen_width
@@ -167,10 +164,10 @@ while 1:
             if grenade_rect.x >=800:
                 grenade_throw = False
                 grenade_rect.x = -100
-                grenade_rect.y = - 100
+                grenade_rect.y = -100
             elif grenade_rect.x <=0:
                 grenade_rect = grenade_surface.get_rect(center=player_rect.midright)
-            grenade_rect.x += step_size
+            grenade_rect.x += 2*step_size
             if grenade_bounce_dir == 1:
                 if grenade_rect.bottom >= ground_height-40: grenade_rect.y -= 2
                 else: grenade_bounce_dir = 0
