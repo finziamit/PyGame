@@ -53,13 +53,13 @@ class JuggleGame:
         '''Set right hand movement'''
         if direction == 'right' and self.__right_hand_rect.x <= 800:
             self.__right_hand_rect.x += 1
-        if direction == 'left' and self.__right_hand_rect.x >= 0:
+        if direction == 'left' and self.__right_hand_rect.x >= 0 and self.__right_hand_rect.x > self.__left_hand_rect.x:
             self.__right_hand_rect.x -= 1
 
 
     def __move_left_hand(self, direction):
         '''Set left hand movement'''
-        if direction == 'right' and self.__left_hand_rect.x <= 800:
+        if direction == 'right' and self.__left_hand_rect.x <= 800 and self.__right_hand_rect.x > self.__left_hand_rect.x:
             self.__left_hand_rect.x += 1
         if direction == 'left' and self.__left_hand_rect.x >= 0:
             self.__left_hand_rect.x -= 1
