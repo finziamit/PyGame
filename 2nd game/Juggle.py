@@ -16,9 +16,11 @@ class Hand:
     def get_surface(self):
         return self.__surface
     
-    @rect.setter
-    def set_rect(self, x_value):
-        self.__rect.x = x_value
+    def move_hand_right(self):
+        if self.__rect.x <800: self.__rect.x += 1
+    
+    def move_hand_left(self):
+        if self.__rect.x > 0: self.__rect.x -= 1
 
 
 class Ball:
@@ -35,13 +37,18 @@ class Ball:
     def get_surface(self):
         return self.__surface
     
-    @rect.setter
-    def set_rect_X(self, x_value):
-        self.__rect.x = x_value
-    
-    @rect.setter
-    def set_rect_Y(self, y_value):
-        self.__rect.y = y_value
+    def move_ball(self):
+        direction = randint(0,2) # 0 -> right, 1 -> left
+        ball_speed = randint(1, 6) # power of the ball
+        ball_gravity = -10 * ball_speed
+        for i in range(10 * ball_speed):
+            ball_gravity += 1
+            self.__rect.y += ball_gravity
+            
+            if self.__rect.x < 800 or self.__rect.x > 0:
+                self.__rect.x += direction
+            else:
+                self.__rect.x -= direction
 
 
 def game_play():
@@ -57,6 +64,25 @@ def game_play():
     blue_ball = Ball('graphics/balls/blue_ball.png')
     red_ball = Ball('graphics/balls/red_ball.png')
     yellow_ball = Ball('graphics/balls/yellow_ball.png')
+
+    while 1:
+        for event in event.get():
+                if event.type == QUIT:
+                    quit()
+                    sys.exit()
+            
+                # move right hand right using the right arrow key
+                if event.key == K_RIGHT: right_hand.move_hand_right()
+
+                # move right hand left using the left arrow key
+                if event.key == K_LEFT: right_hand.move_hand_left()
+
+                # move left hand right using the 'D' key
+                if event.key == K_d: left_hand.move_hand_right()
+
+                # move left hand left using the 'A' key
+                if event.key == K_a: left_hand.move_hand_left()
+
 # class JuggleGame:
 #     def __init__(self):
 #         self.__screen = display.set_mode((800,600))
