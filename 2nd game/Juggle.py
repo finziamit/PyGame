@@ -56,7 +56,7 @@ def game_play():
     display.set_caption("Juggler")
     clock = time.Clock()
 
-    background_surface = image.load('2nd game/graphics/background/theater_bg.jpg').convert()
+    background_surface = image.load('2nd game/graphics/background/theater_bg.png').convert()
 
     right_hand = Hand('2nd game/graphics/hands/right_hand.png', (300, 500))
     left_hand = Hand('2nd game/graphics/hands/left_hand.png', (300, 300))
@@ -65,7 +65,7 @@ def game_play():
     red_ball = Ball('2nd game/graphics/balls/red_ball.png')
     yellow_ball = Ball('2nd game/graphics/balls/yellow_ball.png')
 
-    while 1:
+    while 1:        
         for action in event.get():
                 if action.type == QUIT:
                     quit()
