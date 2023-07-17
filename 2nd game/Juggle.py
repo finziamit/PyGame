@@ -66,25 +66,28 @@ def game_play():
     yellow_ball = Ball('2nd game/graphics/balls/yellow_ball.png')
 
     while 1:
-        for event in event.get():
-                if event.type == QUIT:
+        for action in event.get():
+                if action.type == QUIT:
                     quit()
                     sys.exit()
             
-                # move right hand right using the right arrow key
-                if event.key == K_RIGHT: right_hand.move_hand_right()
+                if action.type == KEYDOWN:
+                    # move right hand right using the right arrow key
+                    if action.key == K_RIGHT: right_hand.move_hand_right()
 
-                # move right hand left using the left arrow key
-                if event.key == K_LEFT: right_hand.move_hand_left()
+                    # move right hand left using the left arrow key
+                    if action.key == K_LEFT: right_hand.move_hand_left()
 
-                # move left hand right using the 'D' key
-                if event.key == K_d: left_hand.move_hand_right()
+                    # move left hand right using the 'D' key
+                    if action.key == K_d: left_hand.move_hand_right()
 
-                # move left hand left using the 'A' key
-                if event.key == K_a: left_hand.move_hand_left()
+                    # move left hand left using the 'A' key
+                    if action.key == K_a: left_hand.move_hand_left()
         
         # end of the event handler
-        screen.bilt(background_surface, (0, 0))
+        screen.blit(background_surface, (0, 0))
+        screen.blit(right_hand.get_surface, right_hand.get_rect)
+        screen.blit(left_hand.get_surface, left_hand.get_rect)
 
 def main():
     init()
