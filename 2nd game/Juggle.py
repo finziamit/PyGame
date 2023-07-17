@@ -4,9 +4,9 @@ from random import randint
 
 class Hand:
     ''' An hand in the game '''
-    def init(self, path, placement):
+    def __init__(self, path, placement):
         self.__surface = image.load(path).convert_alpha()
-        self.__rect = self._surface.get_rect(midleft=placement)
+        self.__rect = self.__surface.get_rect(midleft=placement)
     
     @property
     def get_rect(self):
@@ -25,9 +25,9 @@ class Hand:
 
 class Ball:
     ''' A ball in the game '''
-    def init(self, path):
+    def __init__(self, path):
         self.__surface = image.load(path).convert_alpha()
-        self.__rect = self._surface.get_rect(midleft=(20,300))
+        self.__rect = self.__surface.get_rect(midleft=(20,300))
     
     @property
     def get_rect(self):
@@ -56,14 +56,14 @@ def game_play():
     display.set_caption("Juggler")
     clock = time.Clock()
 
-    background_surface = image.load('graphics/background/theater_bg.jpg').convert()
+    background_surface = image.load('2nd game/graphics/background/theater_bg.jpg').convert()
 
-    right_hand = Hand('graphics/hands/right_hand.png', (300, 500))
-    left_hand = Hand('graphics/hands/left_hand.png', (300, 300))
+    right_hand = Hand('2nd game/graphics/hands/right_hand.png', (300, 500))
+    left_hand = Hand('2nd game/graphics/hands/left_hand.png', (300, 300))
 
-    blue_ball = Ball('graphics/balls/blue_ball.png')
-    red_ball = Ball('graphics/balls/red_ball.png')
-    yellow_ball = Ball('graphics/balls/yellow_ball.png')
+    blue_ball = Ball('2nd game/graphics/balls/blue_ball.png')
+    red_ball = Ball('2nd game/graphics/balls/red_ball.png')
+    yellow_ball = Ball('2nd game/graphics/balls/yellow_ball.png')
 
     while 1:
         for event in event.get():
@@ -82,6 +82,17 @@ def game_play():
 
                 # move left hand left using the 'A' key
                 if event.key == K_a: left_hand.move_hand_left()
+        
+        # end of the event handler
+        screen.bilt(background_surface, (0, 0))
+
+def main():
+    init()
+    game_play()
+
+if __name__ == '__main__':
+    main()
+
 
 # class JuggleGame:
 #     def __init__(self):
