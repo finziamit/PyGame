@@ -115,6 +115,11 @@ def game_play():
         if left_hand.get_rect.colliderect(right_hand.get_rect):
             move_left_hand_right = False
             move_right_hand_left = False
+        
+        # check that a ball didn't fall
+        if red_ball.get_rect.y >= 500: sys.exit()
+        if blue_ball.get_rect.y >= 500: sys.exit()
+        if yellow_ball.get_rect.y >= 500: sys.exit()
 
         screen.blit(background_surface, (0, 0))
         screen.blit(right_hand.get_surface, right_hand.get_rect)
