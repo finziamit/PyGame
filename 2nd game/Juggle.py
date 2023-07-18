@@ -111,6 +111,11 @@ def game_play():
         if move_left_hand_right: left_hand.move_hand_right()
         if move_left_hand_left: left_hand.move_hand_left()
 
+        # check that hands doesnt change sides
+        if left_hand.get_rect.colliderect(right_hand.get_rect):
+            move_left_hand_right = False
+            move_right_hand_left = False
+
         screen.blit(background_surface, (0, 0))
         screen.blit(right_hand.get_surface, right_hand.get_rect)
         screen.blit(left_hand.get_surface, left_hand.get_rect)
