@@ -1,6 +1,6 @@
 from pygame import *
 import sys
-from random import randint
+from random import choice
 
 class Hand:
     ''' An hand in the game '''
@@ -10,11 +10,11 @@ class Hand:
         self.__rect = self.__surface.get_rect(midleft=placement)
     
     @property
-    def get_rect(self):
+    def rect(self):
         return self.__rect
     
     @property
-    def get_surface(self):
+    def surface(self):
         return self.__surface
     
     def move_hand_right(self):
@@ -30,27 +30,47 @@ class Ball:
         self.__surface = image.load(path)
         self.__surface = transform.smoothscale(self.__surface.convert_alpha(), (40,40))
         self.__rect = self.__surface.get_rect(midleft=(400,40))
+        self._direction = choice([-1.5, -1, -0.5, 0, 0.5, 1, 1.5])
+        self._first_touch = True
     
     @property
-    def get_rect(self):
+    def rect(self):
         return self.__rect
     
     @property
-    def get_surface(self):
+    def surface(self):
         return self.__surface
     
-    def move_ball(self):
-        direction = randint(0,2) # 0 -> right, 1 -> left
-        ball_speed = randint(1, 6) # power of the ball
-        ball_gravity = -10 * ball_speed
-        for i in range(10 * ball_speed):
-            ball_gravity += 1
-            self.__rect.y += ball_gravity
-            
-            if self.__rect.x < 800 or self.__rect.x > 0:
-                self.__rect.x += direction
-            else:
-                self.__rect.x -= direction
+    @property
+    def direction(self):
+        return self._direction
+
+    @property
+    def first_touch(self):
+        return self._first_touch
+
+    @direction.setter
+    def direction(self):
+        self._direction *= -1
+
+    @first_touch.setter
+    def first_touch(self, val):
+        self._first_touch = val
+    
+    def move_ball(self):        
+        if self._first_touch:
+            self.__rect.y += 1
+            if self.__rect.x >= 800 or self.__rect.x <= 0: self._direction *= -1
+            self.__rect.x += self._direction
+        else:
+            ball_speed = choice(range(1, 7)) # power of the ball
+            ball_gravity = -10 * ball_speed
+            for i in range(10 * ball_speed):
+                ball_gravity += 1
+                self.__rect.y += ball_gravity
+
+                if self.__rect.x >= 800 or self.__rect.x <= 0: self._direction *= -1
+                self.__rect.x += self._direction
 
 
 def game_play():
@@ -67,6 +87,8 @@ def game_play():
     blue_ball = Ball('2nd game/graphics/balls/blue_ball.png')
     red_ball = Ball('2nd game/graphics/balls/red_ball.png')
     yellow_ball = Ball('2nd game/graphics/balls/yellow_ball.png')
+
+    balls = [blue_ball, red_ball, yellow_ball]
 
     move_right_hand_right = False
     move_right_hand_left = False
@@ -106,8 +128,8 @@ def game_play():
         
         # end of the event handler
 
-        # handle ball movement
-        # TODO: add ball movement
+        # ball movement
+        for ball in balls: ball.move_ball()
 
         # handle hands movement
         if move_right_hand_right: right_hand.move_hand_right()
@@ -117,24 +139,29 @@ def game_play():
         if move_left_hand_left: left_hand.move_hand_left()
 
         # check that hands doesnt change sides
-        if left_hand.get_rect.colliderect(right_hand.get_rect):
+        if left_hand.rect.colliderect(right_hand.rect):
             move_left_hand_right = False
             move_right_hand_left = False
-        
-        # handle ball collisions
-        # TODO: handle ball collisions
 
         # check for game-over
-        if red_ball.get_rect.y >= 500: sys.exit()
-        if blue_ball.get_rect.y >= 500: sys.exit()
-        if yellow_ball.get_rect.y >= 500: sys.exit()
+        if red_ball.rect.y >= 500: sys.exit()
+        if blue_ball.rect.y >= 500: sys.exit()
+        if yellow_ball.rect.y >= 500: sys.exit()
+
+        # check if the hand touched the ball
+        for ball in balls:
+            if left_hand.rect.colliderect(ball.rect) or right_hand.rect.colliderect(ball.rect):
+                ball.first_touch(False)
+                ball.direction = choice[-1, 1]
 
         screen.blit(background_surface, (0, 0))
-        screen.blit(right_hand.get_surface, right_hand.get_rect)
-        screen.blit(left_hand.get_surface, left_hand.get_rect)
-        screen.blit(red_ball.get_surface ,red_ball.get_rect)
-        screen.blit(blue_ball.get_surface, blue_ball.get_rect)
-        screen.blit(yellow_ball.get_surface, yellow_ball.get_rect)
+        screen.blit(right_hand.surface, right_hand.rect)
+        screen.blit(left_hand.surface, left_hand.rect)
+        for ball in balls:
+            screen.blit(ball.surface, ball.rect)
+        # screen.blit(red_ball.surface ,red_ball.get_rect)
+        # screen.blit(blue_ball.surface, blue_ball.get_rect)
+        # screen.blit(yellow_ball.surface, yellow_ball.get_rect)
         display.update()
         clock.tick(240)
     # end of while loop
