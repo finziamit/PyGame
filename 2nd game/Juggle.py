@@ -30,7 +30,7 @@ class Ball:
         self.__surface = image.load(path)
         self.__surface = transform.smoothscale(self.__surface.convert_alpha(), (40,40))
         self.__rect = self.__surface.get_rect(midleft=(400,40))
-        self._direction = choice([-1.5, -1, -0.5, 0, 0.5, 1, 1.5])
+        self._direction = choice([-1.5, -1, -0.5, 0.5, 1, 1.5])
         self._first_touch = True
     
     @property
