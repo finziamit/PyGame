@@ -18,7 +18,7 @@ class Hand:
         return self.__surface
     
     def move_hand_right(self):
-        if self.__rect.x < 700: self.__rect.x += 1
+        if self.__rect.right < 800: self.__rect.x += 1
     
     def move_hand_left(self):
         if self.__rect.x > 0: self.__rect.x -= 1
