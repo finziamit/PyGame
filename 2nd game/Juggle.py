@@ -27,8 +27,9 @@ class Hand:
 class Ball:
     ''' A ball in the game '''
     def __init__(self, path):
-        self.__surface = image.load(path).convert_alpha()
-        self.__rect = self.__surface.get_rect(midleft=(20,300))
+        self.__surface = image.load(path)
+        self.__surface = transform.smoothscale(self.__surface.convert_alpha(), (40,40))
+        self.__rect = self.__surface.get_rect(midleft=(400,40))
     
     @property
     def get_rect(self):
@@ -57,11 +58,11 @@ def game_play():
     display.set_caption("Juggler")
     clock = time.Clock()
 
-    background_surface = image.load('2nd game/graphics/background/theater_bg.png').convert()
-    background_surface = transform.scale_by(background_surface,0.7)
+    background_surface = image.load('2nd game/graphics/background/theater_bg.png')
+    background_surface = transform.smoothscale(background_surface.convert(), (800,550))
 
-    right_hand = Hand('2nd game/graphics/hands/right_hand.png', (500, 450))    
-    left_hand = Hand('2nd game/graphics/hands/left_hand.png', (250, 450))
+    right_hand = Hand('2nd game/graphics/hands/right_hand.png', (500, 430))    
+    left_hand = Hand('2nd game/graphics/hands/left_hand.png', (250, 430))
 
     blue_ball = Ball('2nd game/graphics/balls/blue_ball.png')
     red_ball = Ball('2nd game/graphics/balls/red_ball.png')
@@ -105,6 +106,10 @@ def game_play():
         
         # end of the event handler
 
+        # handle ball movement
+        # TODO: add ball movement
+
+        # handle hands movement
         if move_right_hand_right: right_hand.move_hand_right()
         if move_right_hand_left: right_hand.move_hand_left()
 
@@ -116,7 +121,10 @@ def game_play():
             move_left_hand_right = False
             move_right_hand_left = False
         
-        # check that a ball didn't fall
+        # handle ball collisions
+        # TODO: handle ball collisions
+
+        # check for game-over
         if red_ball.get_rect.y >= 500: sys.exit()
         if blue_ball.get_rect.y >= 500: sys.exit()
         if yellow_ball.get_rect.y >= 500: sys.exit()
@@ -124,7 +132,11 @@ def game_play():
         screen.blit(background_surface, (0, 0))
         screen.blit(right_hand.get_surface, right_hand.get_rect)
         screen.blit(left_hand.get_surface, left_hand.get_rect)
+        screen.blit(red_ball.get_surface ,red_ball.get_rect)
+        screen.blit(blue_ball.get_surface, blue_ball.get_rect)
+        screen.blit(yellow_ball.get_surface, yellow_ball.get_rect)
         display.update()
+        clock.tick(240)
     # end of while loop
 
 def main():
