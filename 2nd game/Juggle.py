@@ -6,7 +6,8 @@ class Hand:
     ''' An hand in the game '''
     def __init__(self, path, placement):
         self.__surface = image.load(path).convert_alpha()
-        self.__surface = transform.scale_by(self.__surface, 0.2)
+        # self.__surface = transform.scale_by(self.__surface, 0.2)
+        transform.smoothscale(self.__surface.convert_alpha(), (80,80))
         self.__rect = self.__surface.get_rect(midleft=placement)
     
     @property
@@ -43,7 +44,7 @@ class Ball:
     
     @property
     def direction(self):
-        return self._direction
+        return self.__direction
 
     @property
     def first_touch(self):
@@ -51,25 +52,25 @@ class Ball:
 
     @direction.setter
     def direction_set(self, direction):
-        self._direction = direction
+        self.__direction = direction
 
     @first_touch.setter
-    def first_touch_set(self, val):
-        self._first_touch = val
+    def first_touch(self, val):
+        self.__first_touch = val
     
     def move_ball(self):        
         if self.__first_touch:
             self.__rect.y += 1
-            if self.__rect.x >= 800 or self.__rect.x <= 0: self._direction *= -1
+            if self.__rect.x >= 800 or self.__rect.x <= 0: self.__direction *= -1
             self.__rect.x += self.__direction
         else:
-            ball_speed = choice(range(1, 7)) # power of the ball
+            ball_speed = choice(range(1, 4)) # power of the ball
             ball_gravity = -10 * ball_speed
             for i in range(10 * ball_speed):
                 ball_gravity += 1
                 self.__rect.y += ball_gravity
 
-                if self.__rect.x >= 800 or self.__rect.x <= 0: self._direction *= -1
+                if self.__rect.x >= 800 or self.__rect.x <= 0: self.__direction *= -1
                 self.__rect.x += self.__direction
 
 
@@ -81,8 +82,8 @@ def game_play():
     background_surface = image.load('2nd game/graphics/background/theater_bg.png')
     background_surface = transform.smoothscale(background_surface.convert(), (800,550))
 
-    right_hand = Hand('2nd game/graphics/hands/right_hand.png', (500, 430))    
-    left_hand = Hand('2nd game/graphics/hands/left_hand.png', (250, 430))
+    right_hand = Hand('2nd game/graphics/hands/right_hand1.png', (500, 430))    
+    left_hand = Hand('2nd game/graphics/hands/left_hand1.png', (250, 430))
 
     blue_ball = Ball('2nd game/graphics/balls/blue_ball.png')
     red_ball = Ball('2nd game/graphics/balls/red_ball.png')
@@ -151,8 +152,10 @@ def game_play():
         # check if the hand touched the ball
         for ball in balls:
             if left_hand.rect.colliderect(ball.rect) or right_hand.rect.colliderect(ball.rect):
-                ball.first_touch_set(False)
-                ball.direction_set(choice([-1.5, -1.25, -1, -0.75, -0.5, -0.25, 0.25, 0.5, 0.75, 1, 1.25, 1.5]))
+                # TODO: set balls first touch to false and set the new direction
+                ball.first_touch = False
+                ball.direction_set = choice([-1.5, -1.25, -1, -0.75, -0.5, -0.25, 0.25, 0.5, 0.75, 1, 1.25, 1.5])
+                ball.move_ball()
 
         screen.blit(background_surface, (0, 0))
         screen.blit(right_hand.surface, right_hand.rect)
