@@ -30,6 +30,8 @@ class Ball:
         self.__surface = image.load(path)
         self.__surface = transform.smoothscale(self.__surface.convert_alpha(), (40,40))
         self.__rect = self.__surface.get_rect(midleft=(400,40))
+        self.__ball_gravity = 0
+        self.__vertical_fall = True
         self.__direction = choice([-1, 1])
         self.__first_touch = True
     
@@ -42,15 +44,31 @@ class Ball:
         return self.__surface
     
     @property
+    def vertical_fall(self):
+        return self.__vertical_fall
+
+    @property
     def direction(self):
         return self.__direction
 
     @property
     def first_touch(self):
         return self.__first_touch
+    
+    @property
+    def ball_gravity(self):
+        return self.__ball_gravity
+    
+    @ball_gravity.setter
+    def ball_gravity(self, val):
+        self.__ball_gravity = val
+    
+    @vertical_fall.setter
+    def vertical_fall(self, val):
+        self.__vertical_fall = val
 
     @direction.setter
-    def direction_set(self, direction):
+    def direction(self, direction):
         self.__direction = direction
 
     @first_touch.setter
@@ -63,14 +81,16 @@ class Ball:
             if self.__rect.x >= 800 or self.__rect.x <= 0: self.__direction *= -1
             self.__rect.x += self.__direction
         else:
-            ball_speed = choice(range(1, 4)) # power of the ball
-            ball_gravity = -10 * ball_speed
-            for i in range(10 * ball_speed):
-                ball_gravity += 1
-                self.__rect.y += ball_gravity
-
-                if self.__rect.x >= 800 or self.__rect.x <= 0: self.__direction *= -1
-                self.__rect.x += self.__direction
+            ball_speed = choice(range(1,6)) / 10 # power of the ball
+            if self.__vertical_fall:                
+                # self.__ball_gravity = -30 #* ball_speed
+                if self.__rect.top > 900: self.__rect.top = 900
+                self.__vertical_fall = False
+            else:
+                self.__ball_gravity += 1
+                self.__rect.y += self.__ball_gravity
+                if self.__rect.right >= 800 or self.__rect.left <= 0: self.__direction *= -1
+                self.__rect.x += self.__direction * ball_speed
 
 
 def game_play():
@@ -152,7 +172,9 @@ def game_play():
         for ball in balls:
             if left_hand.rect.colliderect(ball.rect) or right_hand.rect.colliderect(ball.rect):
                 ball.first_touch = False
-                ball.direction_set = choice([-1.5, -1.25, -1, -0.75, -0.5, -0.25, 0.25, 0.5, 0.75, 1, 1.25, 1.5])
+                ball.direction = choice([-1.5, -1.25, -1, -0.75, -0.5, -0.25, 0.25, 0.5, 0.75, 1, 1.25, 1.5])
+                ball.vertical_fall = True
+                ball.ball_gravity = choice([-20, -25, -30, -35])
                 ball.move_ball()
 
         screen.blit(background_surface, (0, 0))
