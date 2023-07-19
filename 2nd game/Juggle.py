@@ -5,8 +5,7 @@ from random import choice
 class Hand:
     ''' An hand in the game '''
     def __init__(self, path, placement):
-        self.__surface = image.load(path).convert_alpha()
-        # self.__surface = transform.scale_by(self.__surface, 0.2)
+        self.__surface = image.load(path).convert_alpha()        
         transform.smoothscale(self.__surface.convert_alpha(), (80,80))
         self.__rect = self.__surface.get_rect(midleft=placement)
     
@@ -152,7 +151,6 @@ def game_play():
         # check if the hand touched the ball
         for ball in balls:
             if left_hand.rect.colliderect(ball.rect) or right_hand.rect.colliderect(ball.rect):
-                # TODO: set balls first touch to false and set the new direction
                 ball.first_touch = False
                 ball.direction_set = choice([-1.5, -1.25, -1, -0.75, -0.5, -0.25, 0.25, 0.5, 0.75, 1, 1.25, 1.5])
                 ball.move_ball()
@@ -162,9 +160,6 @@ def game_play():
         screen.blit(left_hand.surface, left_hand.rect)
         for ball in balls:
             screen.blit(ball.surface, ball.rect)
-        # screen.blit(red_ball.surface ,red_ball.get_rect)
-        # screen.blit(blue_ball.surface, blue_ball.get_rect)
-        # screen.blit(yellow_ball.surface, yellow_ball.get_rect)
         display.update()
         clock.tick(240)
     # end of while loop
