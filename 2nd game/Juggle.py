@@ -105,7 +105,14 @@ def game_play():
     red_ball = Ball('2nd game/graphics/balls/red_ball.png')
     yellow_ball = Ball('2nd game/graphics/balls/yellow_ball.png')
 
+    test_font = font.Font(None, 50)
+    game_deactivated_screen_color = (94,129,162)
+    game_deactivated_text_color = (0, 164, 100)
+    instructions_text_surface = test_font.render("To start a game press space button", False, game_deactivated_text_color)
+    instructions_text_rect = instructions_text_surface.get_rect(center = (400,50))
+
     balls = [blue_ball, red_ball, yellow_ball]
+    game_active = False
 
     move_right_hand_right = False
     move_right_hand_left = False
@@ -116,74 +123,94 @@ def game_play():
                 if action.type == QUIT:
                     quit()
                     sys.exit()
+                
+                if action.type == KEYDOWN and action.key == K_ESCAPE:
+                    quit()
+                    sys.exit()
             
-                if action.type == KEYDOWN:
-                    # move right hand right using the right arrow key
-                    if action.key == K_RIGHT: move_right_hand_right = True
+                if game_active:
+                    if action.type == KEYDOWN:
+                        # move right hand right using the right arrow key
+                        if action.key == K_RIGHT: move_right_hand_right = True
 
-                    # move right hand left using the left arrow key
-                    if action.key == K_LEFT: move_right_hand_left = True
+                        # move right hand left using the left arrow key
+                        if action.key == K_LEFT: move_right_hand_left = True
 
-                    # move left hand right using the 'D' key
-                    if action.key == K_d: move_left_hand_right = True
+                        # move left hand right using the 'D' key
+                        if action.key == K_d: move_left_hand_right = True
 
-                    # move left hand left using the 'A' key
-                    if action.key == K_a: move_left_hand_left = True
+                        # move left hand left using the 'A' key
+                        if action.key == K_a: move_left_hand_left = True
 
-                if action.type == KEYUP:
-                    # move right hand right using the right arrow key
-                    if action.key == K_RIGHT: move_right_hand_right = False
+                    if action.type == KEYUP:
+                        # move right hand right using the right arrow key
+                        if action.key == K_RIGHT: move_right_hand_right = False
 
-                    # move right hand left using the left arrow key
-                    if action.key == K_LEFT: move_right_hand_left = False
+                        # move right hand left using the left arrow key
+                        if action.key == K_LEFT: move_right_hand_left = False
 
-                    # move left hand right using the 'D' key
-                    if action.key == K_d: move_left_hand_right = False
+                        # move left hand right using the 'D' key
+                        if action.key == K_d: move_left_hand_right = False
 
-                    # move left hand left using the 'A' key
-                    if action.key == K_a: move_left_hand_left = False
-        
-        # end of the event handler
-
-        # ball movement
-        for ball in balls: ball.move_ball()
-
-        # handle hands movement
-        if move_right_hand_right: right_hand.move_hand_right()
-        if move_right_hand_left: right_hand.move_hand_left()
-
-        if move_left_hand_right: left_hand.move_hand_right()
-        if move_left_hand_left: left_hand.move_hand_left()
-
-        # check that hands doesnt change sides
-        if left_hand.rect.colliderect(right_hand.rect):
-            move_left_hand_right = False
-            move_right_hand_left = False
-
-        # check for game-over
-        if red_ball.rect.y >= 500: sys.exit()
-        if blue_ball.rect.y >= 500: sys.exit()
-        if yellow_ball.rect.y >= 500: sys.exit()
-
-        # check if the hand touched the ball
-        for ball in balls:
-            if left_hand.rect.colliderect(ball.rect) or right_hand.rect.colliderect(ball.rect):
-                ball.first_touch = False
-                if ball.rect.x >= 750:
-                    ball.direction = -1
-                elif ball.rect.x <=50:
-                    ball.direction = 1
+                        # move left hand left using the 'A' key
+                        if action.key == K_a: move_left_hand_left = False
+                # end of if game active block
                 else:
-                    ball.direction = choice([-1, 1])
-                ball.speed = choice(range(1,4)) / 2
-                ball.ball_gravity = choice(range(9,12)) * -1
-                ball.move_ball()
+                    if action.type == KEYDOWN and action.key == K_SPACE:
+                        game_active = True
+                        right_hand.rect.x = 500
+                        left_hand.rect.x = 250
+                        for ball in balls:
+                            ball.first_touch = True
+                            ball.rect.midleft=(400,40)
+                            ball.ball_gravity = 0
+                            ball.direction = choice([-1, 1])
+                            ball.speed = 1
 
-        screen.blit(background_surface, (0, 0))
-        screen.blit(right_hand.surface, right_hand.rect)
-        screen.blit(left_hand.surface, left_hand.rect)
-        for ball in balls:
-            screen.blit(ball.surface, ball.rect)
+        # end of the event handler
+        if game_active:
+            # ball movement
+            for ball in balls: ball.move_ball()
+
+            # handle hands movement
+            if move_right_hand_right: right_hand.move_hand_right()
+            if move_right_hand_left: right_hand.move_hand_left()
+
+            if move_left_hand_right: left_hand.move_hand_right()
+            if move_left_hand_left: left_hand.move_hand_left()
+
+            # check that hands doesnt change sides
+            if left_hand.rect.colliderect(right_hand.rect):
+                move_left_hand_right = False
+                move_right_hand_left = False
+
+            # check for game-over
+            for ball in balls:
+                if ball.rect.y >=500: game_active = False
+
+            # check if the hand touched the ball
+            for ball in balls:
+                if left_hand.rect.colliderect(ball.rect) or right_hand.rect.colliderect(ball.rect):
+                    ball.first_touch = False
+                    if ball.rect.x >= 750:
+                        ball.direction = -1
+                    elif ball.rect.x <=50:
+                        ball.direction = 1
+                    else:
+                        ball.direction = choice([-1, 1])
+                    ball.speed = choice(range(1,4)) / 2
+                    ball.ball_gravity = choice(range(9,12)) * -1
+                    ball.move_ball()
+
+            screen.blit(background_surface, (0, 0))
+            screen.blit(right_hand.surface, right_hand.rect)
+            screen.blit(left_hand.surface, left_hand.rect)
+            for ball in balls:
+                screen.blit(ball.surface, ball.rect)
+        # end of game_active
+        else: # if game is not active
+            screen.fill(game_deactivated_screen_color)
+            screen.blit(instructions_text_surface, instructions_text_rect)
         display.update()
         clock.tick(240)
     # end of while loop
