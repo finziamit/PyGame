@@ -28,7 +28,7 @@ class Ball:
     ''' A ball in the game '''
     def __init__(self, path):
         self.__surface = image.load(path)
-        self.__surface = transform.smoothscale(self.__surface.convert_alpha(), (40,40))
+        self.__surface = transform.smoothscale(self.__surface.convert_alpha(), (50,50))
         self.__rect = self.__surface.get_rect(midleft=(400,40))
         self.__ball_gravity = 0
         self.__direction = choice([-1, 1])
