@@ -29,7 +29,7 @@ class Ball:
     def __init__(self, path):
         self.__surface = image.load(path)
         self.__surface = transform.smoothscale(self.__surface.convert_alpha(), (50,50))
-        self.__rect = self.__surface.get_rect(midleft=(400,40))
+        self.__rect = self.__surface.get_rect(midleft=(0,0))
         self.__ball_gravity = 0
         self.__direction = choice([-1, 1])
         self.__first_touch = True
@@ -162,7 +162,8 @@ def game_play():
                         left_hand.rect.x = 250
                         for ball in balls:
                             ball.first_touch = True
-                            ball.rect.midleft=(400,40)
+                            start_point = (choice(range(350,450)), 40)
+                            ball.rect.midleft=start_point #(400,40)
                             ball.ball_gravity = 0
                             ball.direction = choice([-1, 1])
                             ball.speed = 1
