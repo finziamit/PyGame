@@ -22,4 +22,4 @@ The second game is a juggle game where you can control each hand and can't let a
 This game was not based on any video or guide and implemented in order to practice and test what I learnd from the first game.
 
 
-![Alt text](image-2.png)
+![Alt text](juggle.png)
