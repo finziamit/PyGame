@@ -5,8 +5,8 @@ from random import choice
 class Hand:
     ''' An hand in the game '''
     def __init__(self, path, placement):
-        self.__surface = image.load(path).convert_alpha()        
-        transform.smoothscale(self.__surface.convert_alpha(), (80,80))
+        self.__surface = image.load(path)
+        self.__surface = transform.smoothscale(self.__surface.convert_alpha(), (100,80))
         self.__rect = self.__surface.get_rect(midleft=placement)
     
     @property
@@ -38,7 +38,7 @@ class Ball:
     @property
     def rect(self):
         return self.__rect
-    
+
     @property
     def surface(self):
         return self.__surface
@@ -98,8 +98,8 @@ def game_play():
     background_surface = image.load('2nd game/graphics/background/theater_bg.png')
     background_surface = transform.smoothscale(background_surface.convert(), (800,550))
 
-    right_hand = Hand('2nd game/graphics/hands/right_hand1.png', (500, 430))    
-    left_hand = Hand('2nd game/graphics/hands/left_hand1.png', (250, 430))
+    right_hand = Hand('2nd game/graphics/hands/right_hand.png', (500, 430))    
+    left_hand = Hand('2nd game/graphics/hands/left_hand.png', (250, 430))
 
     blue_ball = Ball('2nd game/graphics/balls/blue_ball.png')
     red_ball = Ball('2nd game/graphics/balls/red_ball.png')
