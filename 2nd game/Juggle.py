@@ -106,8 +106,8 @@ def game_play():
     yellow_ball = Ball('2nd game/graphics/balls/yellow_ball.png')
 
     test_font = font.Font(None, 50)
-    game_deactivated_screen_color = (94,129,162)
-    game_deactivated_text_color = (0, 164, 100)
+    game_deactivated_screen_color = (255,0,24)
+    game_deactivated_text_color = (255, 255, 255)
     instructions_text_surface = test_font.render("To start a game press space button", False, game_deactivated_text_color)
     instructions_text_rect = instructions_text_surface.get_rect(center = (400,50))
 
