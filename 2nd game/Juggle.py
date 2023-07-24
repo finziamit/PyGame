@@ -80,13 +80,16 @@ class Ball:
             self.__rect.y += 1
             if self.__rect.x >= 800 or self.__rect.x <= 0: self.__direction *= -1
             self.__rect.x += self.__direction
+
         else:
-            if self.__rect.top > 800:
-                self.__rect.top = 800
+            if self.__rect.top > 800: self.__ball_gravity = 0
             if self.__ball_gravity < 2: self.__ball_gravity += 0.1
+
             self.__rect.y += self.__ball_gravity
+
             if self.__rect.right >= 800: self.__direction = -1
             if self.__rect.left <= 0: self.__direction = 1
+
             self.__rect.x += self.__direction * self.__speed
 
 
@@ -163,12 +166,12 @@ def game_play():
                         for ball in balls:
                             ball.first_touch = True
                             start_point = (choice(range(350,450)), 40)
-                            ball.rect.midleft=start_point #(400,40)
+                            ball.rect.midleft=start_point
                             ball.ball_gravity = 0
                             ball.direction = choice([-1, 1])
                             ball.speed = 1
-
         # end of the event handler
+
         if game_active:
             # ball movement
             for ball in balls: ball.move_ball()
@@ -193,14 +196,9 @@ def game_play():
             for ball in balls:
                 if left_hand.rect.colliderect(ball.rect) or right_hand.rect.colliderect(ball.rect):
                     ball.first_touch = False
-                    if ball.rect.x >= 750:
-                        ball.direction = -1
-                    elif ball.rect.x <=50:
-                        ball.direction = 1
-                    else:
-                        ball.direction = choice([-1, 1])
-                    ball.speed = choice(range(1,4)) / 2
-                    ball.ball_gravity = choice(range(9,12)) * -1
+                    ball.direction = choice([-1, 1])
+                    ball.speed = choice(range(2,4)) / 2
+                    ball.ball_gravity = choice(range(8,11)) * -1
                     ball.move_ball()
 
             screen.blit(background_surface, (0, 0))
@@ -212,6 +210,10 @@ def game_play():
         else: # if game is not active
             screen.fill(game_deactivated_screen_color)
             screen.blit(instructions_text_surface, instructions_text_rect)
+            move_right_hand_right = False
+            move_right_hand_left = False
+            move_left_hand_right = False
+            move_left_hand_left = False
         display.update()
         clock.tick(240)
     # end of while loop
