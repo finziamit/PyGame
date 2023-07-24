@@ -23,4 +23,6 @@ The second game is a juggle game where you can control each hand and can't let a
 This game was not based on any video or guide and implemented in order to practice and test what I learnd from the first game.
 
 
-![Juggle game img](juggle.png)
+https://github.com/finziamit/PyGame/assets/104727614/f4ca31cb-4692-4a3b-875a-144493851d4f
+
+
