@@ -92,7 +92,6 @@ class Ball:
 
             self.__rect.x += self.__direction * self.__speed
 
-
 def game_play():
     screen = display.set_mode((800,500))
     display.set_caption("Juggler")
@@ -110,9 +109,11 @@ def game_play():
 
     test_font = font.Font(None, 50)
     game_deactivated_screen_color = (255,0,24)
-    game_deactivated_text_color = (255, 255, 255)
-    instructions_text_surface = test_font.render("To start a game press space button", False, game_deactivated_text_color)
+    instructions_text_surface = test_font.render("To start a game press space button", False, 'white')
     instructions_text_rect = instructions_text_surface.get_rect(center = (400,50))
+
+    score_surface = test_font.render(f"Score: 0", False, 'white')
+    score_rect = score_surface.get_rect(center = (400, 50))
 
     balls = [blue_ball, red_ball, yellow_ball]
     game_active = False
@@ -121,6 +122,7 @@ def game_play():
     move_right_hand_left = False
     move_left_hand_right = False
     move_left_hand_left = False
+    score = -1
     while 1:        
         for action in event.get():
                 if action.type == QUIT:
@@ -161,6 +163,7 @@ def game_play():
                 else:
                     if action.type == KEYDOWN and action.key == K_SPACE:
                         game_active = True
+                        score = 0
                         right_hand.rect.x = 500
                         left_hand.rect.x = 250
                         for ball in balls:
@@ -197,19 +200,30 @@ def game_play():
                 if left_hand.rect.colliderect(ball.rect) or right_hand.rect.colliderect(ball.rect):
                     ball.first_touch = False
                     ball.direction = choice([-1, 1])
+                    ball.rect.bottom = right_hand.rect.top
                     ball.speed = choice(range(2,4)) / 2
                     ball.ball_gravity = choice(range(8,11)) * -1
                     ball.move_ball()
+                    score += 1
+
+            score_surface = test_font.render(f"Score: {score}", False, 'white')
 
             screen.blit(background_surface, (0, 0))
             screen.blit(right_hand.surface, right_hand.rect)
             screen.blit(left_hand.surface, left_hand.rect)
+            screen.blit(score_surface, score_rect)
             for ball in balls:
                 screen.blit(ball.surface, ball.rect)
         # end of game_active
         else: # if game is not active
             screen.fill(game_deactivated_screen_color)
             screen.blit(instructions_text_surface, instructions_text_rect)
+
+            final_score_surface = test_font.render(f"Your score: {score}", False, 'white')
+            final_score_rect = instructions_text_surface.get_rect(center = (500, 400))
+
+            if score >= 0: screen.blit(final_score_surface, final_score_rect)
+
             move_right_hand_right = False
             move_right_hand_left = False
             move_left_hand_right = False
