@@ -1,6 +1,8 @@
 from pygame import *
 import sys
 from random import choice
+from datetime import date
+import sqlite3
 
 class Hand:
     ''' An hand in the game '''
@@ -92,6 +94,38 @@ class Ball:
 
             self.__rect.x += self.__direction * self.__speed
 
+
+class ScoresDB:
+    def __init__(self):
+        self.__connection = sqlite3.connect("scores.db")
+        self.__cursor = self.__connection.cursor()
+        create_scores_table = """CREATE TABLE IF NOT EXISTS
+        scores(score_id INTEGER PRIMARY KEY, score_count INTEGER, date TEXT)"""
+        self.__cursor.execute(create_scores_table)
+    
+    @property
+    def cursor(self):
+        return self.__cursor
+
+    def get_results(self):
+        self.__cursor.execute("SELECT * FROM scores")
+        return self.__cursor.fetchall()
+
+    def add_score(self, score):
+        row = (score, date.today())
+        self.__cursor.execute("INSERT INTO scores(score_count, date) VALUES (?, ?)", row)
+        self.__connection.commit()
+    
+    def get_top_10(self):
+        results = self.get_results()
+        sorted_results = sorted(results, key=lambda x:x[1], reverse=True)
+        if len(sorted_results) <= 10:
+            return sorted_results
+        else:
+            return sorted_results[:10]
+
+
+
 def game_play():
     screen = display.set_mode((800,500))
     display.set_caption("Juggler")
@@ -122,6 +156,10 @@ def game_play():
     move_right_hand_left = False
     move_left_hand_right = False
     move_left_hand_left = False
+
+    score_added = False
+
+    scores_DB = ScoresDB()
     score = -1
     while 1:        
         for action in event.get():
@@ -163,6 +201,7 @@ def game_play():
                 else:
                     if action.type == KEYDOWN and action.key == K_SPACE:
                         game_active = True
+                        score_added = False
                         score = 0
                         right_hand.rect.x = 500
                         left_hand.rect.x = 250
@@ -222,7 +261,11 @@ def game_play():
             final_score_surface = test_font.render(f"Your score: {score}", False, 'white')
             final_score_rect = instructions_text_surface.get_rect(center = (500, 400))
 
-            if score >= 0: screen.blit(final_score_surface, final_score_rect)
+            if score >= 0:
+                screen.blit(final_score_surface, final_score_rect)
+                if not score_added:
+                    scores_DB.add_score(score)
+                    score_added = True
 
             move_right_hand_right = False
             move_right_hand_left = False
