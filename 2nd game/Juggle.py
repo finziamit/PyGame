@@ -143,10 +143,7 @@ def game_play():
 
     test_font = font.Font(None, 50)
     score_display_font = font.Font(None, 40)
-<<<<<<< HEAD
     score_table_font = font.Font(None, 30)
-=======
->>>>>>> 3524e502bd6dfc6f5b53b3a6d884236fddf515e4
 
     game_deactivated_screen_color = (255,0,24)
     instructions_text_surface = test_font.render("Select an option and press the space button", False, 'white')
@@ -160,13 +157,8 @@ def game_play():
     top_scores_option_rect = top_scores_option_surface.get_rect(midleft=(300,220))
 
     # Highest scores table
-<<<<<<< HEAD
     score_display_surface = score_display_font.render("Top Scores (to return to main menu press 'M'):", False, 'white')
     score_display_rect = score_display_surface.get_rect(center = (400,50))
-=======
-    score_display_surface = score_display_font.render("#    Score   Date", False, 'white')
-    score_display_rect = score_display_surface.get_rect(center = (400,100))
->>>>>>> 3524e502bd6dfc6f5b53b3a6d884236fddf515e4
 
     score_surface = test_font.render(f"Score: 0", False, 'white')
     score_rect = score_surface.get_rect(center = (400, 120))
@@ -229,13 +221,10 @@ def game_play():
                     if action.type == KEYDOWN and action.key == K_DOWN:
                         player_choice = 2
 
-<<<<<<< HEAD
                     if action.type == KEYDOWN and action.key == K_m:
                         player_choice = 2
                         score_table = False
 
-=======
->>>>>>> 3524e502bd6dfc6f5b53b3a6d884236fddf515e4
                     if action.type == KEYDOWN and action.key == K_SPACE:
                         if player_choice == 1:
                             game_active = True
@@ -251,16 +240,10 @@ def game_play():
                                 ball.direction = choice([-1, 1])
                                 ball.speed = 1
                         else:
-<<<<<<< HEAD
                             score_table = True
         # end of the event handler
-=======
-                            # TODO: display 'highest scores' screen
-                            pass
-        # end of the event handler
-        print(player_choice)
->>>>>>> 3524e502bd6dfc6f5b53b3a6d884236fddf515e4
         if game_active:
+            # set player choice back to 1
             player_choice = 1
             # ball movement
             for ball in balls: ball.move_ball()
@@ -301,16 +284,8 @@ def game_play():
             for ball in balls:
                 screen.blit(ball.surface, ball.rect)
         # end of game_active
-        else: # if game is not active
+        else:
             screen.fill(game_deactivated_screen_color)
-<<<<<<< HEAD
-=======
-            screen.blit(instructions_text_surface, instructions_text_rect)
-            screen.blit(play_option_surface, play_option_rect)
-            screen.blit(top_scores_option_surface, top_scores_option_rect)
-            if player_choice == 1: draw.circle(screen, (0,0,0), [280,170], 4, 0)
-            else: draw.circle(screen, (0,0,0), [280,220], 4, 0)
->>>>>>> 3524e502bd6dfc6f5b53b3a6d884236fddf515e4
 
             if score_table:
                 screen.blit(score_display_surface, score_display_rect)
