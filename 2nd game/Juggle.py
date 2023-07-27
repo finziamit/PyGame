@@ -142,12 +142,26 @@ def game_play():
     yellow_ball = Ball('2nd game/graphics/balls/yellow_ball.png')
 
     test_font = font.Font(None, 50)
+    score_display_font = font.Font(None, 40)
+    score_table_font = font.Font(None, 30)
+
     game_deactivated_screen_color = (255,0,24)
-    instructions_text_surface = test_font.render("To start a game press space button", False, 'white')
+    instructions_text_surface = test_font.render("Select an option and press the space button", False, 'white')
     instructions_text_rect = instructions_text_surface.get_rect(center = (400,50))
 
+    # Choice in main screen
+    play_option_surface = score_display_font.render("Play", False, 'white')
+    play_option_rect = play_option_surface.get_rect(midleft=(300,170))
+
+    top_scores_option_surface = score_display_font.render("Highest Scores", False, 'white')
+    top_scores_option_rect = top_scores_option_surface.get_rect(midleft=(300,220))
+
+    # Highest scores table
+    score_display_surface = score_display_font.render("Top Scores (to return to main menu press 'M'):", False, 'white')
+    score_display_rect = score_display_surface.get_rect(center = (400,50))
+
     score_surface = test_font.render(f"Score: 0", False, 'white')
-    score_rect = score_surface.get_rect(center = (400, 50))
+    score_rect = score_surface.get_rect(center = (400, 120))
 
     balls = [blue_ball, red_ball, yellow_ball]
     game_active = False
@@ -158,9 +172,11 @@ def game_play():
     move_left_hand_left = False
 
     score_added = False
+    score_table = False
 
     scores_DB = ScoresDB()
     score = -1
+    player_choice = 1
     while 1:        
         for action in event.get():
                 if action.type == QUIT:
@@ -199,22 +215,35 @@ def game_play():
                         if action.key == K_a: move_left_hand_left = False
                 # end of if game active block
                 else:
-                    if action.type == KEYDOWN and action.key == K_SPACE:
-                        game_active = True
-                        score_added = False
-                        score = 0
-                        right_hand.rect.x = 500
-                        left_hand.rect.x = 250
-                        for ball in balls:
-                            ball.first_touch = True
-                            start_point = (choice(range(350,450)), 40)
-                            ball.rect.midleft=start_point
-                            ball.ball_gravity = 0
-                            ball.direction = choice([-1, 1])
-                            ball.speed = 1
-        # end of the event handler
+                    if action.type == KEYDOWN and action.key == K_UP:
+                        player_choice = 1
 
+                    if action.type == KEYDOWN and action.key == K_DOWN:
+                        player_choice = 2
+
+                    if action.type == KEYDOWN and action.key == K_m:
+                        player_choice = 2
+                        score_table = False
+
+                    if action.type == KEYDOWN and action.key == K_SPACE:
+                        if player_choice == 1:
+                            game_active = True
+                            score_added = False
+                            score = 0
+                            right_hand.rect.x = 500
+                            left_hand.rect.x = 250
+                            for ball in balls:
+                                ball.first_touch = True
+                                start_point = (choice(range(350,450)), 40)
+                                ball.rect.midleft=start_point
+                                ball.ball_gravity = 0
+                                ball.direction = choice([-1, 1])
+                                ball.speed = 1
+                        else:
+                            score_table = True
+        # end of the event handler
         if game_active:
+            player_choice = 1
             # ball movement
             for ball in balls: ball.move_ball()
 
@@ -256,21 +285,34 @@ def game_play():
         # end of game_active
         else: # if game is not active
             screen.fill(game_deactivated_screen_color)
-            screen.blit(instructions_text_surface, instructions_text_rect)
 
-            final_score_surface = test_font.render(f"Your score: {score}", False, 'white')
-            final_score_rect = instructions_text_surface.get_rect(center = (500, 400))
+            if score_table:
+                screen.blit(score_display_surface, score_display_rect)
+                top_10_scores = scores_DB.get_top_10()
+                scores_surfaces = [score_table_font.render(f"{i+1}.    {top_10_scores[i][1]}  {top_10_scores[i][2]}", False, 'black') for i in range(10)]
+                scores_rects = [scores_surfaces[i].get_rect(midleft=(150, 100 + (i*40))) for i in range(10)] 
+                for i in range(10):
+                    screen.blit(scores_surfaces[i], scores_rects[i])
+            else:
+                screen.blit(instructions_text_surface, instructions_text_rect)
+                screen.blit(play_option_surface, play_option_rect)
+                screen.blit(top_scores_option_surface, top_scores_option_rect)
+                if player_choice == 1: draw.circle(screen, (0,0,0), [280,170], 4, 0)
+                else: draw.circle(screen, (0,0,0), [280,220], 4, 0)
 
-            if score >= 0:
-                screen.blit(final_score_surface, final_score_rect)
-                if not score_added:
-                    scores_DB.add_score(score)
-                    score_added = True
+                final_score_surface = test_font.render(f"Your score: {score}", False, 'white')
+                final_score_rect = instructions_text_surface.get_rect(center = (500, 400))
 
-            move_right_hand_right = False
-            move_right_hand_left = False
-            move_left_hand_right = False
-            move_left_hand_left = False
+                if score >= 0:
+                    screen.blit(final_score_surface, final_score_rect)
+                    if not score_added:
+                        scores_DB.add_score(score)
+                        score_added = True
+
+                move_right_hand_right = False
+                move_right_hand_left = False
+                move_left_hand_right = False
+                move_left_hand_left = False
         display.update()
         clock.tick(240)
     # end of while loop
