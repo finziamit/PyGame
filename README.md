@@ -22,6 +22,6 @@ The second game is an exciting juggle challenge where you'll need to control eac
 
 **Watch the Juggle Challenge in action:** 🎥
 
-![Demo Video](Juggle.mp4)
+[![Demo Video](juggle_thumbnail.png)](Juggle.mp4)
 
 Feel free to explore the code and try the games yourself. Happy gaming! 🕹️😃
