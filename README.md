@@ -1,28 +1,27 @@
-# PyGame
-This repo was created for PyGame learning and practicing
+# 🎮 PyGame Repository 🎮
 
-## How to use
-1. Make sure you have pygame installed on your computer or install it using `pip install pygame`.
-2. Clone this repo using `git clone` and go to the main directory PyGame
-3. Copy the `py` file from repo `xth game` to the main directory `PyGame`
-4. Run the `py` file of the chosen game (for example: `python Juggle.py`)
-5. Enjoy!
+Welcome to my PyGame learning and practice repository! Here, I've created exciting games and projects to enhance my PyGame skills. Let's have some fun! 😄
 
-## First game
-The first game is based on a YT tutorial for pygame you can find it in the following link: https://www.youtube.com/watch?v=AY9MnQ4x3zk
-Notice that the game is not the exact same and some ideas of my own were added.
+## How to Use 🚀
+1. Make sure you have Pygame installed on your computer. If not, install it using `pip install pygame`.
+2. Clone this repository using `git clone` and navigate to the main directory `PyGame`.
+3. Copy the `.py` file from the `xth game` folder to the main directory `PyGame`.
+4. Run the `.py` file of the chosen game (for example: `python Juggle.py`).
+5. Enjoy the game and explore the magic of PyGame! 🎉
 
+## 🎮 First Game - Classic Pygame Fun 🎮
+The first game is inspired by a fantastic YouTube tutorial for Pygame. You can find the tutorial at this link: [YouTube Tutorial](https://www.youtube.com/watch?v=AY9MnQ4x3zk).
+Please note that while the game has some similarities, I've added my own creative twists! 🎨
 
-![First game img 1](image.png)
+![First game screenshot 1](image.png)
 
+![First game screenshot 2](image-1.png)
 
-![First game img 2](image-1.png)
+## 🎮 Second Game - Juggle Challenge 🤹‍♂️
+The second game is an exciting juggle challenge where you'll need to control each hand to prevent the balls from falling. It's a custom creation, designed to practice and apply the skills I gained from the first game! 💪
 
-## Second game
-The second game is a juggle game where you can control each hand and can't let a ball fall.
-This game was not based on any video or guide and implemented in order to practice and test what I learnd from the first game.
+**Watch the Juggle Challenge in action:** 🎥
 
+[![Demo Video](juggle_thumbnail.png)](Juggle.mp4)
 
-https://github.com/finziamit/PyGame/assets/104727614/f4ca31cb-4692-4a3b-875a-144493851d4f
-
-
+Feel free to explore the code and try the games yourself. Happy gaming! 🕹️😃
