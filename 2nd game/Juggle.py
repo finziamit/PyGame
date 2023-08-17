@@ -131,15 +131,15 @@ def game_play():
     display.set_caption("Juggler")
     clock = time.Clock()
 
-    background_surface = image.load('2nd game/graphics/background/theater_bg.png')
+    background_surface = image.load('graphics/background/theater_bg.png')
     background_surface = transform.smoothscale(background_surface.convert(), (800,550))
 
-    right_hand = Hand('2nd game/graphics/hands/right_hand.png', (500, 430))    
-    left_hand = Hand('2nd game/graphics/hands/left_hand.png', (250, 430))
+    right_hand = Hand('graphics/hands/right_hand.png', (500, 430))    
+    left_hand = Hand('graphics/hands/left_hand.png', (250, 430))
 
-    blue_ball = Ball('2nd game/graphics/balls/blue_ball.png')
-    red_ball = Ball('2nd game/graphics/balls/red_ball.png')
-    yellow_ball = Ball('2nd game/graphics/balls/yellow_ball.png')
+    blue_ball = Ball('graphics/balls/blue_ball.png')
+    red_ball = Ball('graphics/balls/red_ball.png')
+    yellow_ball = Ball('graphics/balls/yellow_ball.png')
 
     test_font = font.Font(None, 50)
     score_display_font = font.Font(None, 40)
