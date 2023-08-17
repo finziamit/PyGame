@@ -3,10 +3,15 @@
 Welcome to my PyGame learning and practice repository! Here, I've created exciting games and projects to enhance my PyGame skills. Let's have some fun! 😄
 
 ## How to Use 🚀
+### Juggle game 🤹
+1. Run `Juggle.exe - Shortcut.lnk`
+2. Enjoy the game and explore the magic of PyGame! 🎉
+
+### First game 🕹️
 1. Make sure you have Pygame installed on your computer. If not, install it using `pip install pygame`.
 2. Clone this repository using `git clone` and navigate to the main directory `PyGame`.
-3. Copy the `.py` file from the `xth game` folder to the main directory `PyGame`.
-4. Run the `.py` file of the chosen game (for example: `python Juggle.py`).
+3. Copy the `.py` file from the `1st game` folder to the main directory `PyGame`.
+4. Run the `.py` file of the chosen game (for example: `first_game.py`).
 5. Enjoy the game and explore the magic of PyGame! 🎉
 
 ## 🎮 First Game - Classic Pygame Fun 🎮
