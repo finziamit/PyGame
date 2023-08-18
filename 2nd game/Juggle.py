@@ -3,6 +3,7 @@ import sys
 from random import choice
 from datetime import date
 import sqlite3
+import os
 
 class Hand:
     ''' An hand in the game '''
@@ -97,11 +98,22 @@ class Ball:
 
 class ScoresDB:
     def __init__(self):
-        self.__connection = sqlite3.connect("scores.db")
+        executable_dir = os.path.dirname(os.path.abspath(__file__))
+        db_path = os.path.join(executable_dir, "scores.db")
+
+        try:
+            self.__connection = sqlite3.connect(db_path)
+        except sqlite3.Error as e:
+            print("Error while connecting to the database:", e)
+
         self.__cursor = self.__connection.cursor()
         create_scores_table = """CREATE TABLE IF NOT EXISTS
         scores(score_id INTEGER PRIMARY KEY, score_count INTEGER, date TEXT)"""
-        self.__cursor.execute(create_scores_table)
+
+        try:
+            self.__cursor.execute(create_scores_table)
+        except sqlite3.Error as e:
+            print("Error while creating scores table:", e)
     
     @property
     def cursor(self):
@@ -290,9 +302,9 @@ def game_play():
             if score_table:
                 screen.blit(score_display_surface, score_display_rect)
                 top_10_scores = scores_DB.get_top_10()
-                scores_surfaces = [score_table_font.render(f"{i+1}.    {top_10_scores[i][1]}  {top_10_scores[i][2]}", False, 'black') for i in range(10)]
-                scores_rects = [scores_surfaces[i].get_rect(midleft=(150, 100 + (i*40))) for i in range(10)] 
-                for i in range(10):
+                scores_surfaces = [score_table_font.render(f"{i+1}.    {top_10_scores[i][1]}  {top_10_scores[i][2]}", False, 'black') for i in range(len(top_10_scores))]
+                scores_rects = [scores_surfaces[i].get_rect(midleft=(150, 100 + (i*40))) for i in range(len(scores_surfaces))] 
+                for i in range(len(scores_rects)):
                     screen.blit(scores_surfaces[i], scores_rects[i])
             else:
                 screen.blit(instructions_text_surface, instructions_text_rect)
