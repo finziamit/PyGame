@@ -4,8 +4,9 @@ Welcome to my PyGame learning and practice repository! Here, I've created exciti
 
 ## How to Use 🚀
 ### Juggle game 🤹
-1. Run `Juggle.exe - Shortcut.lnk`
-2. Enjoy the game and explore the magic of PyGame! 🎉
+1. Go to `2nd game\dist\Juggle` directory
+2. Run `Juggle.exe``
+3. Enjoy the game and explore the magic of PyGame! 🎉
 
 ### First game 🕹️
 1. Make sure you have Pygame installed on your computer. If not, install it using `pip install pygame`.
