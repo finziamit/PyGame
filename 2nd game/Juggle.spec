@@ -5,10 +5,10 @@ block_cipher = None
 
 
 a = Analysis(
-    ['Juggle.py'],
+    ['2nd game\\Juggle.py'],
     pathex=[],
     binaries=[],
-    datas=[('graphics', 'graphics'), ('scores.db', '.')],
+    datas=[('2nd game/graphics', 'graphics')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

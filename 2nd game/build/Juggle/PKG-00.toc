@@ -1,4 +1,4 @@
-('C:\\src\\github.com\\finziamit\\PyGame\\2nd game\\build\\Juggle\\Juggle.pkg',
+('C:\\src\\github.com\\finziamit\\PyGame\\build\\Juggle\\Juggle.pkg',
  {'BINARY': True,
   'DATA': True,
   'EXECUTABLE': True,
@@ -8,28 +8,22 @@
   'PYZ': False,
   'SPLASH': True},
  [('PYZ-00.pyz',
-   'C:\\src\\github.com\\finziamit\\PyGame\\2nd '
-   'game\\build\\Juggle\\PYZ-00.pyz',
+   'C:\\src\\github.com\\finziamit\\PyGame\\build\\Juggle\\PYZ-00.pyz',
    'PYZ'),
   ('struct',
-   'C:\\src\\github.com\\finziamit\\PyGame\\2nd '
-   'game\\build\\Juggle\\localpycs\\struct.pyc',
+   'C:\\src\\github.com\\finziamit\\PyGame\\build\\Juggle\\localpycs\\struct.pyc',
    'PYMODULE'),
   ('pyimod01_archive',
-   'C:\\src\\github.com\\finziamit\\PyGame\\2nd '
-   'game\\build\\Juggle\\localpycs\\pyimod01_archive.pyc',
+   'C:\\src\\github.com\\finziamit\\PyGame\\build\\Juggle\\localpycs\\pyimod01_archive.pyc',
    'PYMODULE'),
   ('pyimod02_importers',
-   'C:\\src\\github.com\\finziamit\\PyGame\\2nd '
-   'game\\build\\Juggle\\localpycs\\pyimod02_importers.pyc',
+   'C:\\src\\github.com\\finziamit\\PyGame\\build\\Juggle\\localpycs\\pyimod02_importers.pyc',
    'PYMODULE'),
   ('pyimod03_ctypes',
-   'C:\\src\\github.com\\finziamit\\PyGame\\2nd '
-   'game\\build\\Juggle\\localpycs\\pyimod03_ctypes.pyc',
+   'C:\\src\\github.com\\finziamit\\PyGame\\build\\Juggle\\localpycs\\pyimod03_ctypes.pyc',
    'PYMODULE'),
   ('pyimod04_pywin32',
-   'C:\\src\\github.com\\finziamit\\PyGame\\2nd '
-   'game\\build\\Juggle\\localpycs\\pyimod04_pywin32.pyc',
+   'C:\\src\\github.com\\finziamit\\PyGame\\build\\Juggle\\localpycs\\pyimod04_pywin32.pyc',
    'PYMODULE'),
   ('pyiboot01_bootstrap',
    'C:\\Users\\finzi\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python310\\site-packages\\PyInstaller\\loader\\pyiboot01_bootstrap.py',
